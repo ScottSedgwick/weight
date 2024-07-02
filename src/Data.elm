@@ -1,0 +1,16 @@
+module Data exposing (data)
+
+import LineChart
+import LineChart.Colors as Colors
+import LineChart.Dots as Dots
+
+import Model exposing (Weight)
+import Data.Meagen exposing (meagen)
+import Data.Scott exposing (scott)
+
+data : List (LineChart.Series Weight)
+data = 
+  [ LineChart.line Colors.blueLight Dots.square "Scott" scott
+  , LineChart.line Colors.pinkLight Dots.plus "Meagen" meagen
+  -- , LineChart.line Colors.goldLight Dots.diamond "Phoebe" phoebe
+  ]
