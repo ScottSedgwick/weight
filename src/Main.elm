@@ -1,7 +1,8 @@
 module Main exposing (..)
 
+import Browser
 import Time
-import Html
+import Html exposing (..)
 import LineChart
 import LineChart.Junk as Junk
 import LineChart.Area as Area
@@ -21,11 +22,36 @@ import LineChart.Colors as Colors
 import Model exposing(..)
 import Data exposing (..)
 
-main : Html.Html msg
-main = chart
+type Msg = Noop
 
-chart : Html.Html msg
-chart =
+type alias Model =
+  { weights: List (LineChart.Series Weight)
+  }
+
+init : flags -> (Model, Cmd Msg)
+init _ =
+  ( { weights = weightData
+    }
+  , Cmd.none)
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+  case msg of
+    Noop -> (model, Cmd.none)
+
+subscriptions : Model -> Sub Msg
+subscriptions _ = Sub.none
+
+main : Program () Model Msg
+main = Browser.element { init = init, update = update, view = view, subscriptions = subscriptions }
+
+view : Model -> Html Msg
+view model =
+  div []
+    [ chart model.weights
+    ]
+chart : List (LineChart.Series Weight) -> Html.Html msg
+chart data =
   LineChart.viewCustom
     { x = xAxisConfig
     , y = Axis.full 400 "Weight (kg)" .weight

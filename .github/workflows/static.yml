@@ -27,7 +27,8 @@ jobs:
         uses: jorelali/setup-elm@v6
 
       - name: Build deployment artifacts
-        run: elm make src/Main.elm --output=output/index.html
+        run: make build
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

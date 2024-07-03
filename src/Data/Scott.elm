@@ -49,4 +49,5 @@ scott =
   , Weight (mkdate 2024 Jan 20)  99.2
   , Weight (mkdate 2024 Jun 21) 102.2
   , Weight (mkdate 2024 Jul  2) 101.7
+  , Weight (mkdate 2024 Jul  3)  98.9
   ]
