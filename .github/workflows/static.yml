@@ -22,6 +22,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.0.2
+      
+      - name: Install UglifyJS
+        run: npm install uglify-js -g
 
       - name: Install Elm compiler
         uses: jorelali/setup-elm@v6
