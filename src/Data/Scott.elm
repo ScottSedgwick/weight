@@ -1,7 +1,7 @@
 module Data.Scott exposing (..)
 
 import Time exposing (Month(..))
-import Model exposing (Weight, mkdate)
+import Model exposing (Bp, Weight, mkdate)
 
 weight : List Weight
 weight = 
@@ -51,4 +51,33 @@ weight =
   , Weight (mkdate 2024 Jul  2) 101.7
   , Weight (mkdate 2024 Jul  3)  98.9
   , Weight (mkdate 2024 Jul  7)  98.2
+  ]
+
+blood : List Bp
+blood = 
+  [ Bp (mkdate 2022 Jun 18) 126 74
+  , Bp (mkdate 2022 Jun 18) 124 79
+  , Bp (mkdate 2022 Jun 27) 124 79
+  , Bp (mkdate 2022 Jul  2) 126 83
+  , Bp (mkdate 2022 Jul 17) 122 75
+  , Bp (mkdate 2022 Jul 23) 123 75
+  , Bp (mkdate 2022 Aug  6) 127 76
+  , Bp (mkdate 2022 Aug 13) 127 77
+  , Bp (mkdate 2022 Aug 20) 113 75
+  , Bp (mkdate 2022 Aug 27) 119 78
+  , Bp (mkdate 2022 Sep  3) 111 67
+  , Bp (mkdate 2022 Sep 11) 119 68
+  , Bp (mkdate 2022 Oct 10) 130 73
+  , Bp (mkdate 2022 Oct 15) 115 69
+  , Bp (mkdate 2022 Oct 20) 121 66
+  , Bp (mkdate 2022 Nov  2) 118 70
+  , Bp (mkdate 2022 Nov 19) 120 71
+  , Bp (mkdate 2022 Dec  3) 121 72
+  , Bp (mkdate 2023 Jan  1) 133 79
+  , Bp (mkdate 2023 Jan 22) 130 76
+  , Bp (mkdate 2023 Apr  2) 122 73
+  , Bp (mkdate 2024 Jan 20) 124 79
+  , Bp (mkdate 2024 Jun 21) 136 82
+  , Bp (mkdate 2024 Jul  3) 113 71
+  , Bp (mkdate 2024 Jul  7) 110 69
   ]

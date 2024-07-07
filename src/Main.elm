@@ -3,6 +3,8 @@ module Main exposing (..)
 import Browser
 import Time
 import Html exposing (..)
+import Html.Attributes exposing ( attribute, class, id, style )
+import Html.Events exposing (..)
 import LineChart
 import LineChart.Junk as Junk
 import LineChart.Area as Area
@@ -22,22 +24,26 @@ import LineChart.Colors as Colors
 import Model exposing(..)
 import Data exposing (..)
 
-type Msg = Noop
+type Msg = ChangeTab TabName
 
 type alias Model =
   { weights: List (LineChart.Series Weight)
+  , bps: List (LineChart.Series BpLine)
+  , activeTab : TabName
   }
 
 init : flags -> (Model, Cmd Msg)
 init _ =
   ( { weights = weightData
+    , activeTab = WeightTab
+    , bps = bpData
     }
   , Cmd.none)
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
   case msg of
-    Noop -> (model, Cmd.none)
+    ChangeTab n -> ( { model | activeTab = n }, Cmd.none)
 
 subscriptions : Model -> Sub Msg
 subscriptions _ = Sub.none
@@ -48,12 +54,34 @@ main = Browser.element { init = init, update = update, view = view, subscription
 view : Model -> Html Msg
 view model =
   div []
-    [ chart model.weights
+    [ node "main" [ class "page-content", attribute "aria-label" "Content" ] 
+      [ div [ class "wrapper" ]
+        (div [ class "tab" ] (List.map (tabButton model.activeTab) allTabs) :: ( List.map (tabBody model model.activeTab) allTabs ))
+      ]
     ]
-chart : List (LineChart.Series Weight) -> Html.Html msg
-chart data =
+
+tabButton : TabName -> TabName -> Html Msg
+tabButton a n = 
+  let
+    c = if (a == n) then " active" else ""
+  in
+    button [ class ("tablink tablinks" ++ c), onClick (ChangeTab n) ] [ text (tabName n) ]
+
+tabBody : Model -> TabName -> TabName -> Html Msg
+tabBody model a n = 
+  let
+    attrs = if (a == n) then [ id (tabName n), class "tabcontent", style "display" "block" ] else [ id (tabName n), class "tabcontent" ]
+    tabView = 
+      case n of
+        WeightTab -> weightChart model.weights
+        BpTab -> bpChart model.bps
+  in
+    div attrs [tabView]
+
+weightChart : List (LineChart.Series Weight) -> Html.Html msg
+weightChart data =
   LineChart.viewCustom
-    { x = xAxisConfig
+    { x = xAxisConfigWeight
     , y = Axis.full 400 "Weight (kg)" .weight
     , container = Container.styled "line-chart-1" [ ("width", "1300px") ]
     , interpolation = Interpolation.monotone
@@ -68,5 +96,29 @@ chart data =
     }
     data
 
-xAxisConfig : Axis.Config Weight msg
-xAxisConfig = Axis.time Time.utc 800 "Date" (\x -> toFloat (Time.posixToMillis x.date))
+xAxisConfigWeight : Axis.Config Weight msg
+xAxisConfigWeight = Axis.time Time.utc 800 "Date" (\x -> toFloat (Time.posixToMillis x.date))
+
+bpChart : List (LineChart.Series BpLine) -> Html.Html msg
+bpChart data =
+  LineChart.viewCustom
+    { x = xAxisConfigBp
+    , y = yAxisConfigBp
+    , container = Container.styled "line-chart-1" [ ("width", "1300px") ]
+    , interpolation = Interpolation.monotone
+    , intersection = Intersection.default
+    , legends = Legends.default
+    , events = Events.default
+    , junk = Junk.default
+    , grid = Grid.lines 0.5 Colors.black
+    , area = Area.default
+    , line = Line.default
+    , dots = Dots.default
+    }
+    data
+
+xAxisConfigBp : Axis.Config BpLine msg
+xAxisConfigBp = Axis.time Time.utc 800 "Date" (\x -> toFloat (Time.posixToMillis x.date))
+
+yAxisConfigBp : Axis.Config BpLine msg
+yAxisConfigBp = Axis.full 400 "mmHg" (\x -> toFloat x.pressure)

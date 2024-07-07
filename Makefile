@@ -3,7 +3,7 @@ clean:
 
 copy_assets: clean
 	mkdir output
-	cp assets/index.html output/index.html
+	cp -R assets/ output/
 
 build: clean copy_assets
 	elm make src/Main.elm --output=output/elm.full.js --optimize
