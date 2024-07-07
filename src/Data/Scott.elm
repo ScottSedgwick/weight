@@ -3,8 +3,8 @@ module Data.Scott exposing (..)
 import Time exposing (Month(..))
 import Model exposing (Weight, mkdate)
 
-scott : List Weight
-scott = 
+weight : List Weight
+weight = 
   [ Weight (mkdate 2022 Jan  8) 102.8
   , Weight (mkdate 2022 Jan 15) 101.1
   , Weight (mkdate 2022 Jan 22) 100.4
@@ -50,4 +50,5 @@ scott =
   , Weight (mkdate 2024 Jun 21) 102.2
   , Weight (mkdate 2024 Jul  2) 101.7
   , Weight (mkdate 2024 Jul  3)  98.9
+  , Weight (mkdate 2024 Jul  7)  98.2
   ]
