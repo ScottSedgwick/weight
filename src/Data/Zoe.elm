@@ -11,4 +11,5 @@ weight =
   , Weight (mkdate 2022 Aug 27)  80.2
   , Weight (mkdate 2023 Apr  3)  82.2
   , Weight (mkdate 2024 Jul  7)  76.1
+  , Weight (mkdate 2024 Jul 14)  73.8
   ]

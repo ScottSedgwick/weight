@@ -51,6 +51,7 @@ weight =
   , Weight (mkdate 2024 Jul  2) 101.7
   , Weight (mkdate 2024 Jul  3)  98.9
   , Weight (mkdate 2024 Jul  7)  98.2
+  , Weight (mkdate 2024 Jul 14)  96.1
   ]
 
 blood : List Bp
@@ -80,4 +81,5 @@ blood =
   , Bp (mkdate 2024 Jun 21) 136 82
   , Bp (mkdate 2024 Jul  3) 113 71
   , Bp (mkdate 2024 Jul  7) 110 69
+  , Bp (mkdate 2024 Jul 14) 116 74
   ]
