@@ -5,19 +5,19 @@ import LineChart.Colors as Colors
 import LineChart.Dots as Dots
 import Time
 
-import Model exposing (Bp, Weight)
+import Model exposing (LinePoint, diastolics, systolics, weights)
 import Data.Meagen as M
 import Data.Phoebe as P
 import Data.Scott as S
 import Data.Zoe as Z
 
 
-weightData : List (LineChart.Series Weight)
+weightData : List (LineChart.Series LinePoint)
 weightData = 
-  [ LineChart.line Colors.goldLight Dots.square "Scott" S.weight
-  , LineChart.line Colors.greenLight Dots.plus "Meagen" M.weight
-  , LineChart.line Colors.blueLight Dots.diamond "Phoebe" P.weight
-  , LineChart.line Colors.purpleLight Dots.circle "Zoe" Z.weight
+  [ LineChart.line Colors.goldLight Dots.square "Scott" (weights S.data)
+  , LineChart.line Colors.greenLight Dots.plus "Meagen" (weights M.data)
+  , LineChart.line Colors.blueLight Dots.diamond "Phoebe" (weights P.data)
+  , LineChart.line Colors.purpleLight Dots.circle "Zoe" (weights Z.data)
   ]
 
 type alias BpLine =
@@ -25,8 +25,8 @@ type alias BpLine =
   , pressure : Int
   }
 
-bpData : List (LineChart.Series BpLine)
+bpData : List (LineChart.Series LinePoint)
 bpData =
-  [ LineChart.line Colors.goldLight Dots.square "Scott (Dia)" (List.map (\b -> BpLine b.date b.diastolic) S.blood)
-  , LineChart.line Colors.gold Dots.square "Scott (Sys)" (List.map (\b -> BpLine b.date b.systolic) S.blood)
+  [ LineChart.line Colors.goldLight Dots.square "Scott (Dia)" (diastolics S.data)
+  , LineChart.line Colors.gold Dots.square "Scott (Sys)" (systolics S.data)
   ]

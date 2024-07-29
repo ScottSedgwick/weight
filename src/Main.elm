@@ -27,8 +27,8 @@ import Data exposing (..)
 type Msg = ChangeTab TabName
 
 type alias Model =
-  { weights: List (LineChart.Series Weight)
-  , bps: List (LineChart.Series BpLine)
+  { weights: List (LineChart.Series LinePoint)
+  , bps: List (LineChart.Series LinePoint)
   , activeTab : TabName
   }
 
@@ -78,11 +78,11 @@ tabBody model a n =
   in
     div attrs [tabView]
 
-weightChart : List (LineChart.Series Weight) -> Html.Html msg
+weightChart : List (LineChart.Series LinePoint) -> Html.Html msg
 weightChart data =
   LineChart.viewCustom
     { x = xAxisConfigWeight
-    , y = Axis.full 400 "Weight (kg)" .weight
+    , y = Axis.full 400 "Weight (kg)" .yvalue
     , container = Container.styled "line-chart-1" [ ("width", "1300px") ]
     , interpolation = Interpolation.monotone
     , intersection = Intersection.default
@@ -96,10 +96,10 @@ weightChart data =
     }
     data
 
-xAxisConfigWeight : Axis.Config Weight msg
+xAxisConfigWeight : Axis.Config LinePoint msg
 xAxisConfigWeight = Axis.time Time.utc 800 "Date" (\x -> toFloat (Time.posixToMillis x.date))
 
-bpChart : List (LineChart.Series BpLine) -> Html.Html msg
+bpChart : List (LineChart.Series LinePoint) -> Html.Html msg
 bpChart data =
   LineChart.viewCustom
     { x = xAxisConfigBp
@@ -117,8 +117,8 @@ bpChart data =
     }
     data
 
-xAxisConfigBp : Axis.Config BpLine msg
+xAxisConfigBp : Axis.Config LinePoint msg
 xAxisConfigBp = Axis.time Time.utc 800 "Date" (\x -> toFloat (Time.posixToMillis x.date))
 
-yAxisConfigBp : Axis.Config BpLine msg
-yAxisConfigBp = Axis.full 400 "mmHg" (\x -> toFloat x.pressure)
+yAxisConfigBp : Axis.Config LinePoint msg
+yAxisConfigBp = Axis.full 400 "mmHg" (\x -> x.yvalue)
