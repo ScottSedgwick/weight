@@ -1,7 +1,19 @@
-module Data.Phoebe exposing (..)
+module Data.Phoebe exposing (phoebe)
 
+import LineChart.Colors as Colors
+import LineChart.Dots as Dots
 import Time exposing (Month(..))
 import Model exposing (DataPoint, mkWeight)
+import Model exposing (Person)
+
+phoebe : Person
+phoebe = 
+  { name = "Phoebe"
+  , color1 = Colors.blueLight
+  , color2 = Colors.blue
+  , dot = Dots.diamond
+  , data = data
+  }
 
 data : List DataPoint
 data = 

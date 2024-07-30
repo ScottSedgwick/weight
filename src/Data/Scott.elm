@@ -1,7 +1,19 @@
-module Data.Scott exposing (data)
+module Data.Scott exposing (scott)
 
+import LineChart.Colors as Colors
+import LineChart.Dots as Dots
 import Time exposing (Month(..))
-import Model exposing (DataPoint, mkWeight, mkBp)
+import Model exposing (DataPoint, mkDatum, mkWeight, mkBp)
+import Model exposing (Person)
+
+scott : Person
+scott = 
+  { name = "Scott"
+  , color1 = Colors.goldLight
+  , color2 = Colors.gold
+  , dot = Dots.square
+  , data = data
+  }
 
 data : List DataPoint
 data = 
@@ -25,61 +37,34 @@ data =
   , mkWeight 2022 May 21  96.2
   , mkWeight 2022 May 28  94.6
   , mkWeight 2022 Jun 12  94.1
-  , mkWeight 2022 Jun 18  96.0
-  , mkBp 2022 Jun 18 126 74
-  , mkWeight 2022 Jun 18  96.0
-  , mkBp 2022 Jun 18 124 79
-  , mkWeight 2022 Jun 27  93.4
-  , mkBp 2022 Jun 27 124 79
-  , mkWeight 2022 Jul  2  94.4
-  , mkBp 2022 Jul  2 126 83
-  , mkWeight 2022 Jul 17  93.6
-  , mkBp 2022 Jul 17 122 75
-  , mkWeight 2022 Jul 23  94.1
-  , mkBp 2022 Jul 23 123 75
-  , mkWeight 2022 Aug  6  92.8
-  , mkBp 2022 Aug  6 127 76
-  , mkWeight 2022 Aug 13  92.4
-  , mkBp 2022 Aug 13 127 77
-  , mkWeight 2022 Aug 20  93.0
-  , mkBp 2022 Aug 20 113 75
-  , mkWeight 2022 Aug 27  91.5
-  , mkBp 2022 Aug 27 119 78
-  , mkWeight 2022 Sep  3  91.0
-  , mkBp 2022 Sep  3 111 67
-  , mkWeight 2022 Sep 11  91.1
-  , mkBp 2022 Sep 11 119 68
-  , mkWeight 2022 Oct 10  91.7
-  , mkBp 2022 Oct 10 130 73
-  , mkWeight 2022 Oct 15  91.0
-  , mkBp 2022 Oct 15 115 69
-  , mkWeight 2022 Oct 20  91.4
-  , mkBp 2022 Oct 20 121 66
   , mkBp 2022 Nov  2 118 70
-  , mkWeight 2022 Nov 19  93.7
-  , mkBp 2022 Nov 19 120 71
-  , mkWeight 2022 Dec  3  94.1
-  , mkBp 2022 Dec  3 121 72
-  , mkWeight 2023 Jan  1  96.3
-  , mkBp 2023 Jan  1 133 79
-  , mkWeight 2023 Jan 22  94.8
-  , mkBp 2023 Jan 22 130 76
   , mkWeight 2023 Feb  4  95.1
-  , mkWeight 2023 Apr  2  97.4
-  , mkBp 2023 Apr  2 122 73
-  , mkWeight 2024 Jan 20  99.2
-  , mkBp 2024 Jan 20 124 79
-  , mkWeight 2024 Jun 21 102.2
-  , mkBp 2024 Jun 21 136 82
   , mkWeight 2024 Jul  2 101.7
-  , mkWeight 2024 Jul  3  98.9
-  , mkBp 2024 Jul  3 113 71
-  , mkWeight 2024 Jul  7  98.2
-  , mkBp 2024 Jul  7 110 69
-  , mkWeight 2024 Jul 14  96.1
-  , mkBp 2024 Jul 14 116 74
-  , mkWeight 2024 Jul 21  97.1
-  , mkBp 2024 Jul 21 124 75
-  , mkWeight 2024 Jul 28  94.6
-  , mkBp 2024 Jul 28 126 75
+  ] ++ List.concat
+  [ mkDatum 2022 Jun 18 (Just  96.0) (Just (126, 74)) Nothing
+  , mkDatum 2022 Jun 27 (Just  93.4) (Just (124, 79)) Nothing
+  , mkDatum 2022 Jul  2 (Just  94.4) (Just (126, 83)) Nothing
+  , mkDatum 2022 Jul 17 (Just  93.6) (Just (122, 75)) Nothing
+  , mkDatum 2022 Jul 23 (Just  94.1) (Just (123, 75)) Nothing
+  , mkDatum 2022 Aug  6 (Just  92.8) (Just (127, 76)) Nothing
+  , mkDatum 2022 Aug 13 (Just  92.4) (Just (127, 77)) Nothing
+  , mkDatum 2022 Aug 20 (Just  93.0) (Just (113, 75)) Nothing
+  , mkDatum 2022 Aug 27 (Just  91.5) (Just (119, 78)) Nothing
+  , mkDatum 2022 Sep  3 (Just  91.0) (Just (111, 67)) Nothing
+  , mkDatum 2022 Sep 11 (Just  91.1) (Just (119, 68)) Nothing
+  , mkDatum 2022 Oct 10 (Just  91.7) (Just (130, 73)) Nothing
+  , mkDatum 2022 Oct 15 (Just  91.0) (Just (115, 69)) Nothing
+  , mkDatum 2022 Oct 20 (Just  91.4) (Just (121, 66)) Nothing
+  , mkDatum 2022 Nov 19 (Just  93.7) (Just (120, 71)) Nothing
+  , mkDatum 2022 Dec  3 (Just  94.1) (Just (121, 72)) Nothing
+  , mkDatum 2023 Jan  1 (Just  96.3) (Just (133, 79)) Nothing
+  , mkDatum 2023 Jan 22 (Just  94.8) (Just (130, 76)) Nothing
+  , mkDatum 2023 Apr  2 (Just  97.4) (Just (122, 73)) Nothing
+  , mkDatum 2024 Jan 20 (Just  99.2) (Just (124, 79)) Nothing
+  , mkDatum 2024 Jun 21 (Just 102.2) (Just (136, 82)) Nothing
+  , mkDatum 2024 Jul  3 (Just  98.9) (Just (113, 71)) Nothing
+  , mkDatum 2024 Jul  7 (Just  98.2) (Just (110, 69)) Nothing
+  , mkDatum 2024 Jul 14 (Just  96.1) (Just (116, 74)) Nothing
+  , mkDatum 2024 Jul 21 (Just  97.1) (Just (124, 75)) Nothing
+  , mkDatum 2024 Jul 28 (Just  94.6) (Just (126, 75)) Nothing
   ]

@@ -1,32 +1,30 @@
-module Data exposing (BpLine, bpData, weightData)
+module Data exposing (bpData, weightData)
 
 import LineChart
-import LineChart.Colors as Colors
-import LineChart.Dots as Dots
-import Time
 
-import Model exposing (LinePoint, diastolics, systolics, weights)
-import Data.Meagen as M
-import Data.Phoebe as P
-import Data.Scott as S
-import Data.Zoe as Z
+import Model exposing (LinePoint, Person, diastolics, systolics, weights)
+import Data.Meagen exposing (meagen)
+import Data.Phoebe exposing (phoebe)
+import Data.Scott exposing (scott)
+import Data.Zoe exposing (zoe)
 
 
 weightData : List (LineChart.Series LinePoint)
-weightData = 
-  [ LineChart.line Colors.goldLight Dots.square "Scott" (weights S.data)
-  , LineChart.line Colors.greenLight Dots.plus "Meagen" (weights M.data)
-  , LineChart.line Colors.blueLight Dots.diamond "Phoebe" (weights P.data)
-  , LineChart.line Colors.purpleLight Dots.circle "Zoe" (weights Z.data)
-  ]
+weightData = List.filterMap weightM [scott, meagen, phoebe, zoe]
 
-type alias BpLine =
-  { date : Time.Posix
-  , pressure : Int
-  }
+weightM : Person -> Maybe (LineChart.Series LinePoint)
+weightM p =
+  case (weights p.data) of
+    [] -> Nothing
+    xs -> Just (LineChart.line p.color1 p.dot p.name xs)
 
 bpData : List (LineChart.Series LinePoint)
-bpData =
-  [ LineChart.line Colors.goldLight Dots.square "Scott (Dia)" (diastolics S.data)
-  , LineChart.line Colors.gold Dots.square "Scott (Sys)" (systolics S.data)
-  ]
+bpData = List.concat (List.filterMap bpM [scott, meagen, phoebe, zoe])
+
+bpM : Person -> Maybe (List (LineChart.Series LinePoint))
+bpM p =
+  case (diastolics p.data) of
+    [] -> Nothing
+    _  -> Just [ LineChart.line p.color1 p.dot (p.name ++ " (dia)") (diastolics p.data), 
+                 LineChart.line p.color2 p.dot (p.name ++ " (sys)") (systolics p.data)
+               ]

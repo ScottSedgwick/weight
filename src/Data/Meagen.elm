@@ -1,7 +1,19 @@
-module Data.Meagen exposing (..)
+module Data.Meagen exposing (meagen)
 
+import LineChart.Colors as Colors
+import LineChart.Dots as Dots
 import Time exposing (Month(..))
 import Model exposing (DataPoint, mkWeight)
+import Model exposing (Person)
+
+meagen : Person
+meagen = 
+  { name = "Meagen"
+  , color1 = Colors.greenLight
+  , color2 = Colors.green
+  , dot = Dots.plus
+  , data = data
+  }
 
 data : List DataPoint
 data = 

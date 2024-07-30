@@ -1,7 +1,19 @@
-module Data.Zoe exposing (..)
+module Data.Zoe exposing (zoe)
 
+import LineChart.Colors as Colors
+import LineChart.Dots as Dots
 import Time exposing (Month(..))
 import Model exposing (DataPoint, mkWeight)
+import Model exposing (Person)
+
+zoe : Person
+zoe = 
+  { name = "Zoe"
+  , color1 = Colors.purpleLight
+  , color2 = Colors.purple
+  , dot = Dots.circle
+  , data = data
+  }
 
 data : List DataPoint
 data = 

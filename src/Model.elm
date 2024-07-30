@@ -2,6 +2,8 @@ module Model exposing (..)
 
 import Time exposing (Month, utc)
 import Time.Extra exposing (Parts, partsToPosix)
+import Color exposing (Color)
+import LineChart.Dots as Dots
 
 type TabName
   = WeightTab
@@ -21,6 +23,9 @@ type alias Bp =
   , systolic : Int
   }
 
+type alias Pulse =
+  { pulse : Int }
+
 type alias DataPoint =
   { date : Time.Posix
   , datum : Datum
@@ -33,9 +38,10 @@ type alias LinePoint =
 
 type Datum = W Float
            | B Bp
+           | P Pulse
 
 weights : List DataPoint -> List LinePoint
-weights = List.filterMap maybeW
+weights xs = List.sortBy (\x -> Time.posixToMillis x.date) (List.filterMap maybeW xs)
 
 maybeW : DataPoint -> Maybe LinePoint
 maybeW x = 
@@ -49,8 +55,8 @@ mkWeight y m d w =
   , datum = W w
   }
 
-diastolics : List DataPoint-> List LinePoint
-diastolics = List.filterMap maybeDias
+diastolics : List DataPoint -> List LinePoint
+diastolics xs = List.sortBy (\x -> Time.posixToMillis x.date) (List.filterMap maybeDias xs)
 
 maybeDias : DataPoint -> Maybe LinePoint
 maybeDias x = 
@@ -59,7 +65,7 @@ maybeDias x =
     _     -> Nothing
 
 systolics : List DataPoint-> List LinePoint
-systolics = List.filterMap maybeSyss
+systolics xs = List.sortBy (\x -> Time.posixToMillis x.date) (List.filterMap maybeSyss xs)
 
 maybeSyss : DataPoint -> Maybe LinePoint
 maybeSyss x = 
@@ -76,3 +82,26 @@ mkBp y m d dia sys =
 mkdate : Int -> Month -> Int -> Time.Posix
 mkdate y m d = partsToPosix utc (Parts y m d 0 0 0 0)
 
+mkDatum : Int -> Month -> Int -> Maybe Float -> Maybe (Int, Int) -> Maybe Int -> List DataPoint
+mkDatum y m d mWeight mBp mPulse = 
+  let
+    dt = mkdate y m d
+    weight = case mWeight of
+               Nothing -> []
+               Just w  -> [{ date = dt, datum = W w }]
+    bp = case mBp of
+          Nothing -> []
+          Just (dia,sys) -> [{ date = dt, datum = B { diastolic = dia, systolic = sys }}]
+    pulse = case mPulse of
+              Nothing -> []
+              Just p  -> [{ date = dt, datum = P { pulse = p }}]
+  in
+    weight ++ bp ++ pulse
+
+type alias Person =
+  { name : String
+  , color1 : Color
+  , color2 : Color
+  , dot : Dots.Shape
+  , data : List DataPoint
+  }
