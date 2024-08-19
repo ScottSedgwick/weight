@@ -42,4 +42,7 @@ data =
   , mkWeight 2024 Jul 14  84.7
   , mkWeight 2024 Jul 21  84.2
   , mkWeight 2024 Jul 28  84.7
+  , mkWeight 2024 Aug  4  85.0
+  , mkWeight 2024 Aug 11  84.5
+  , mkWeight 2024 Aug 18  84.9
   ]

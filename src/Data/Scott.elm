@@ -67,4 +67,7 @@ data =
   , mkDatum 2024 Jul 14 (Just  96.1) (Just (116, 74)) Nothing
   , mkDatum 2024 Jul 21 (Just  97.1) (Just (124, 75)) Nothing
   , mkDatum 2024 Jul 28 (Just  94.6) (Just (126, 75)) Nothing
+  , mkDatum 2024 Aug  4 (Just  94.6) Nothing          Nothing
+  , mkDatum 2024 Aug 11 (Just  95.0) Nothing          Nothing
+  , mkDatum 2024 Aug 18 (Just  95.1) Nothing          Nothing
   ]
