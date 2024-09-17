@@ -70,4 +70,5 @@ data =
   , mkDatum 2024 Aug  4 (Just  94.6) Nothing          Nothing
   , mkDatum 2024 Aug 11 (Just  95.0) Nothing          Nothing
   , mkDatum 2024 Aug 18 (Just  95.1) Nothing          Nothing
+  , mkDatum 2024 Sep 15 (Just  93.6) Nothing          Nothing
   ]
